@@ -51,7 +51,7 @@ const deleteProviderByUserId = async (userId: Types.ObjectId) => {
     return deletedProvider;
 };
 
-export default {
+export {
     newProviderRegister,
     findProviderByUserId,
     updateProviderByUserId,

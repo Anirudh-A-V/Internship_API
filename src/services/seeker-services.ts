@@ -55,7 +55,7 @@ const deleteSeekerByUserId = async (userId: Types.ObjectId) => {
     return deletedSeeker;
 };
 
-export default {
+export {
     newSeeekerRegister,
     findSeekerByUserId,
     updateSeekerByUserId,
