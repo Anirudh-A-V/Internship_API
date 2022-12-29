@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import { v2 as cloudinary } from "cloudinary";
 import session from "express-session";
 import cookieParser from "cookie-parser";
+import passport from "passport";
 
 const app = express();
 app.use(cors());
@@ -28,6 +29,9 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 7 
     }
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Hello World!");
