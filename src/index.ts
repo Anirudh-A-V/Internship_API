@@ -7,6 +7,9 @@ import { v2 as cloudinary } from "cloudinary";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import passport from "passport";
+import passportLocal from "passport-local";
+
+import User from "./models/user";
 
 const app = express();
 app.use(cors());
@@ -32,6 +35,11 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+passport.use(User.createStrategy());
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Hello World!");
