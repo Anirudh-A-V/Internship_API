@@ -1,4 +1,4 @@
-import pick from 'lodash/pick';
+import pick from 'lodash-es/pick';
 
 import Job from '../models/jobs';
 import Seeker from '../models/seeker';
