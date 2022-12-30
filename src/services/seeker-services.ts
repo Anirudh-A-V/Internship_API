@@ -1,7 +1,5 @@
-import { Interface } from "readline";
 import Seeker from "../models/seeker";
 import { Types } from "mongoose";
-import { type } from "os";
 
 type SeekerDetails = {
     skills: string[],
