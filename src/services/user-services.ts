@@ -115,4 +115,6 @@ export {
     createUser,
     updateUserById,
     getFullUserById,
+    mergeAsLoggedUser,
+    mergeUserDetails,
 };
