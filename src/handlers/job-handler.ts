@@ -10,11 +10,8 @@ const createJobHandler = async (req: Request, res: Response, next: NextFunction)
         const userId = req.body._id;
         const provider = await findProviderByUserId(userId);
 
-        if (provider === null) {
-            return res.status(404).json({ message: 'Provider not found' });
-        }
-
         const newJob = await createJob(provider._id, req.body);
+        return res.json(newJob);
     } catch (err) {
         console.log('file name: job-handler.ts')
         console.log(err);
@@ -25,13 +22,10 @@ const createJobHandler = async (req: Request, res: Response, next: NextFunction)
 const applyJobHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = req.body._id;
-        const seeker = await findSeekerByUserId(userId);
+        await applyJob(userId, req.body.jobId);
+        const updatedSeeker = await getFullUserById(req.user);
 
-        if (seeker === null) {
-            return res.status(404).json({ message: 'Seeker not found' });
-        }
-
-        const job = await applyJob(seeker._id, req.body.jobId);
+        return res.json(updatedSeeker);
     } catch (err) {
         console.log('file name: job-handler.ts')
         console.log(err);
