@@ -17,13 +17,21 @@ const newSeeekerRegister = async (userId: Types.ObjectId, details: SeekerDetails
     const { _doc: seeker } = await Seeker.create({
         userId,
         skills
-    });
+    })
+        .catch((err) => {
+            console.log('file name: seeker-services.ts')
+            console.log(err);
+        });
 
     return seeker;
 };
 
 const findSeekerByUserId = async (userId: Types.ObjectId) => {
-    const details = await Seeker.findOne({ userId });
+    const details = await Seeker.findOne({ userId })
+        .catch((err) => {
+            console.log('file name: seeker-services.ts')
+            console.log(err);
+        });
 
     const seeker = details?._doc;
 
@@ -44,13 +52,21 @@ const updateSeekerByUserId = async (userId: Types.ObjectId, details: SeekerDetai
         upsert: false,
         runValidators: true,
         new: true
-    });
+    })
+        .catch((err) => {
+            console.log('file name: seeker-services.ts')
+            console.log(err);
+        });
 
     return updatedSeeker;
 };
 
 const deleteSeekerByUserId = async (userId: Types.ObjectId) => {
-    const { _doc: deletedSeeker } = await Seeker.findOneAndDelete({ userId });
+    const { _doc: deletedSeeker } = await Seeker.findOneAndDelete({ userId })
+        .catch((err) => {
+            console.log('file name: seeker-services.ts')
+            console.log(err);
+        });
 
     return deletedSeeker;
 };
