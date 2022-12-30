@@ -19,9 +19,9 @@ type UserRegisterDetails = {
 }
 
 
-const createUser = async (userDetails : UserRegisterDetails) => {
+const createUser = async (userDetails: UserRegisterDetails) => {
     const { email, password, firstName, lastName, userType } = userDetails;
-    const hashedPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = bcrypt.hash(password, 12);
 
     const { _doc: user } = await User.create({
         email,
@@ -29,7 +29,11 @@ const createUser = async (userDetails : UserRegisterDetails) => {
         firstName,
         lastName,
         userType
-    });
+    })
+        .catch((err) => {
+            console.log('file name: user-services.ts')
+            console.log(err);
+        });
 
     return user;
 };
@@ -40,12 +44,16 @@ const updateUserById = async (userId: Types.ObjectId, userDetails: any) => {
     const { _doc: updatedUser } = await User.findOneAndUpdate({
         _id: userId
     },
-    updatedDetails,
-    {
-        upsert: false,
-        runValidators: true,
-        new: true
-    });
+        updatedDetails,
+        {
+            upsert: false,
+            runValidators: true,
+            new: true
+        })
+        .catch((err) => {
+            console.log('file name: user-services.ts')
+            console.log(err);
+        });
 
     return updatedUser;
 };
@@ -64,8 +72,8 @@ const mergeUserDetails = (userOfType: any, user: any) => {
     return safeDetails;
 };
 
-const mergeAsLoggedUser = async (userOfType: any, user: any) => {
-    const mergedUser = await mergeUserDetails(userOfType, user);
+const mergeAsLoggedUser = (userOfType: any, user: any) => {
+    const mergedUser = mergeUserDetails(userOfType, user);
 
     mergedUser.userTypeId = mergedUser._id;
     mergedUser._id = mergedUser.userId;
@@ -80,17 +88,25 @@ const getFullUserById = async (user: any) => {
 
     let userOfType;
     if (userType === 'seeker') {
-        userOfType = await findSeekerByUserId(userId);
+        userOfType = await findSeekerByUserId(userId)
+            .catch((err) => {
+                console.log('file name: user-services.ts')
+                console.log(err);
+            });
     }
     else if (userType === 'provider') {
-        userOfType = await findProviderByUserId(userId);
+        userOfType = await findProviderByUserId(userId)
+            .catch((err) => {
+                console.log('file name: user-services.ts')
+                console.log(err);
+            });
     }
-    
+
     if (userOfType === null) {
         userOfType = { userId: user._id, userType: user.userType };
     }
 
-    const mergedUser = await mergeAsLoggedUser(userOfType, user);
+    const mergedUser = mergeAsLoggedUser(userOfType, user);
 
     return mergedUser;
 };
