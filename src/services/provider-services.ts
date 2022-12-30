@@ -15,13 +15,21 @@ const newProviderRegister = async (userId: Types.ObjectId, details: ProviderDeta
         userId,
         description,
         website
-    });
+    })
+        .catch((err) => {
+            console.log('file name: provider-services.ts')
+            console.log(err);
+        });
 
     return provider;
 };
 
 const findProviderByUserId = async (userId: Types.ObjectId) => {
-    const details = await Provider.findOne({ userId });
+    const details = await Provider.findOne({ userId })
+        .catch((err) => {
+            console.log('file name: provider-services.ts')
+            console.log(err);
+        });
     const provider = details?._doc;
     return provider;
 };
@@ -41,13 +49,22 @@ const updateProviderByUserId = async (userId: Types.ObjectId, details: ProviderD
         upsert: false,
         runValidators: true,
         new: true
-    });
+    })
+        .catch((err) => {
+            console.log('file name: provider-services.ts')
+            console.log(err);
+        });
 
     return updatedProvider;
 };
 
 const deleteProviderByUserId = async (userId: Types.ObjectId) => {
-    const { _doc: deletedProvider } = await Provider.findOneAndDelete({ userId });
+    const { _doc: deletedProvider } = await Provider.findOneAndDelete({ userId })
+        .catch((err) => {
+            console.log('file name: provider-services.ts')
+            console.log(err);
+        });
+        
     return deletedProvider;
 };
 
