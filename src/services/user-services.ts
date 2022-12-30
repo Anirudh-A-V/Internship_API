@@ -75,7 +75,7 @@ const mergeAsLoggedUser = async (userOfType: any, user: any) => {
     return mergedUser;
 };
 
-const getFullUserDetails = async (user: any) => {
+const getFullUserById = async (user: any) => {
     const { userType, userId } = user;
 
     let userOfType;
@@ -98,5 +98,5 @@ const getFullUserDetails = async (user: any) => {
 export {
     createUser,
     updateUserById,
-    getFullUserDetails,
+    getFullUserById,
 };
