@@ -9,7 +9,7 @@ type SeekerDetails = {
 
 
 
-const newSeeekerRegister = async (userId: Types.ObjectId, details: SeekerDetails) => {
+const newSeekerRegister = async (userId: Types.ObjectId, details: SeekerDetails) => {
     const skills = details.skills;
 
     const { _doc: seeker } = await Seeker.create({
@@ -70,7 +70,7 @@ const deleteSeekerByUserId = async (userId: Types.ObjectId) => {
 };
 
 export {
-    newSeeekerRegister,
+    newSeekerRegister,
     findSeekerByUserId,
     updateSeekerByUserId,
     deleteSeekerByUserId,
