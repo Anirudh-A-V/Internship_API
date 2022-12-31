@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { seekerRegistrationHandler, seekerEditHandler, resumeUploadHandler, seekerSearchHandler } from '../handlers/seeker-handler';
-import { upload } from '../utils/Upload';
+import { upload } from '../middleware/Upload';
 
 const router = express.Router();
 
