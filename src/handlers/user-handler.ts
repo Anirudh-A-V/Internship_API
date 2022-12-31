@@ -59,7 +59,7 @@ const signupHandler = async (req: Request, res: Response, next: NextFunction) =>
     }
 };
 
-const isAuthenicatedHandler = async (req: any, res: Response, next: NextFunction) => {
+const isAuthenticatedHandler = async (req: any, res: Response, next: NextFunction) => {
     try {
         const user = {
             _id: req.user._id,
@@ -97,6 +97,6 @@ const imageUploadHandler = async (req: any, res: Response, next: NextFunction) =
 export {
     signinHandler,
     signupHandler,
-    isAuthenicatedHandler,
+    isAuthenticatedHandler,
     imageUploadHandler,
 };
