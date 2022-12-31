@@ -9,10 +9,13 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 
 import User from "./models/user";
+import defaultErrorHandler from "./middleware/errorHandler";
+import useRoute from "./routes";
 
 const app = express();
-app.use(cors({credentials: true, origin: true}));
+app.use(cors({ credentials: true, origin: true }));
 
+// Middlewares
 app.use(session({
     secret: `${process.env.SECRET}`,
     resave: false,
@@ -45,6 +48,9 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(defaultErrorHandler);
+
+// passport config
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -53,15 +59,17 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
+// Routes
 app.get("/", (req: Request, res: Response) => {
     res.send("Welcome to Internship-cell CET API");
 });
 
-const port = process.env.PORT || 3000;
+useRoute(app);
 
-app.listen(port, () => {
-    console.log(`API listening on port ${port}!`);
-});
+
+// Listening & Connection to MongoDB
+const port = process.env.PORT || 3000;
 
 mongoose.set('strictQuery', true);
 mongoose.connect(`${process.env.MY_CONNECTION_URL}`
@@ -71,4 +79,9 @@ mongoose.connect(`${process.env.MY_CONNECTION_URL}`
 ).catch((err) => {
     console.log("Error connecting to MongoDB", err);
 });
+
+app.listen(port, () => {
+    console.log(`API listening on port ${port}!`);
+});
+
 
