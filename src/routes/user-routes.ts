@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { signupHandler, signinHandler, isAuthenticatedHandler, imageUploadHandler } from '../handlers/user-handler';
-import { upload } from '../middleware/Upload';
+import { upload } from '../middleware/upload';
 
 const router = express.Router();
 
