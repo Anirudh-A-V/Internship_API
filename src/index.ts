@@ -72,13 +72,13 @@ useRoute(app);
 const port = process.env.PORT || 3000;
 
 mongoose.set('strictQuery', true);
-mongoose.connect(`${process.env.MY_CONNECTION_URL}`
-).then(() => {
-    console.log("Connected to MongoDB");
-}
-).catch((err) => {
-    console.log("Error connecting to MongoDB", err);
-});
+mongoose.connect(`${process.env.MY_CONNECTION_URL}`)
+    .then(() => {
+        console.log("Connected to MongoDB");
+    })
+    .catch((err) => {
+        console.log("Error connecting to MongoDB", err);
+    });
 
 app.listen(port, () => {
     console.log(`API listening on port ${port}!`);
