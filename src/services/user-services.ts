@@ -1,9 +1,9 @@
 import bcrypt from 'bcryptjs';
 import { Types } from 'mongoose';
 
-import User from '../models/user';
-import { findSeekerByUserId } from './seeker-services';
-import { findProviderByUserId } from './provider-services';
+import User from '../models/user.js';
+import { findSeekerByUserId } from './seeker-services.js';
+import { findProviderByUserId } from './provider-services.js';
 
 type UserLoginDetails = {
     email: string,

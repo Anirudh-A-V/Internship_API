@@ -1,12 +1,12 @@
 import { Express } from 'express';
 
-import userRoutes from './user-routes';
-import neutralRoutes from './neutral-routes';
-import skillsRoutes from './skill-routes';
-import seekersRoutes from './seeker-routes';
-import providersRoutes from './provider-routes';
-import jobsRoutes from './job-routes';
-import checkAuth from '../middleware/check-auth';
+import userRoutes from './user-routes.js';
+import neutralRoutes from './neutral-routes.js';
+import skillsRoutes from './skill-routes.js';
+import seekersRoutes from './seeker-routes.js';
+import providersRoutes from './provider-routes.js';
+import jobsRoutes from './job-routes.js';
+import checkAuth from '../middleware/check-auth.js';
 
 const useRoute = (app: Express) => {
   app.use('/user', userRoutes);

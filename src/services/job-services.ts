@@ -1,11 +1,11 @@
-import pick from 'lodash-es/pick';
+import { pick } from 'lodash-es';
 
-import Job from '../models/jobs';
-import Seeker from '../models/seeker';
-import User from '../models/user';
-import Stats from '../models/stats';
-import Provider from '../models/provider';
-import { getFullUserById } from './user-services';
+import Job from '../models/jobs.js';
+import Seeker from '../models/seeker.js';
+import User from '../models/user.js';
+import Stats from '../models/stats.js';
+import Provider from '../models/provider.js';
+import { getFullUserById } from './user-services.js';
 import { Types } from 'mongoose';
 
 const createJob = async (_id: Types.ObjectId, details: any) => {

@@ -3,9 +3,9 @@ import { v2 } from 'cloudinary';
 import { pick } from 'lodash-es';
 import Seeker from '../models/seeker.js';
 
-import { newSeekerRegister, updateSeekerByUserId } from '../services/seeker-services';
-import { updateUserById, mergeAsLoggedUser } from '../services/user-services';
-import { searchJobs } from '../services/job-services';
+import { newSeekerRegister, updateSeekerByUserId } from '../services/seeker-services.js';
+import { updateUserById, mergeAsLoggedUser } from '../services/user-services.js';
+import { searchJobs } from '../services/job-services.js';
 
 const seekerRegistrationHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {

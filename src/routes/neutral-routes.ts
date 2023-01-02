@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { neutralHandler } from '../handlers/neutral-handler';
+import { neutralHandler } from '../handlers/neutral-handler.js';
 
 const router = express.Router();
 

@@ -1,4 +1,4 @@
-import Provider from "../models/provider";
+import Provider from "../models/provider.js";
 import { Types } from "mongoose";
 
 type ProviderDetails = {

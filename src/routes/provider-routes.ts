@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { providerRegistrationHandler, providerEditHandler, fetchProvidersHandler, getSeekerResume } from '../handlers/provider-handler';
+import { providerRegistrationHandler, providerEditHandler, fetchProvidersHandler, getSeekerResume } from '../handlers/provider-handler.js';
 
 const router = express.Router();
 

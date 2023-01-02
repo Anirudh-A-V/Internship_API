@@ -2,8 +2,8 @@ import { NextFunction, Request, Response } from 'express';
 import { v2 } from 'cloudinary';
 import passport from 'passport';
 
-import User from '../models/user';
-import { createUser, getFullUserById } from '../services/user-services';
+import User from '../models/user.js';
+import { createUser, getFullUserById } from '../services/user-services.js';
 
 const signinHandler = async (req: Request, res: Response, next: NextFunction) => {
     await passport.authenticate('local', (err, user, info) => {

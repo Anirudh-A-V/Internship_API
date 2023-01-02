@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 
-import Stats from "../models/stats";
+import Stats from "../models/stats.js";
 
-const neutralHandler = async (req: any, res: Response, next: NextFunction) => {
+const neutralHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const statData = await Stats.find();
         let totalRecruits = 0;

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import Skill from "../models/skill";
+import Skill from "../models/skill.js";
 
 const getSkillsHandler = async (req: any, res: Response, next: NextFunction) => {
     try {

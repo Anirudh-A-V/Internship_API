@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import { pick } from 'lodash-es';
 
-import User from '../models/user';
-import Provider from '../models/provider';
-import { newProviderRegister, updateProviderByUserId } from '../services/provider-services';
-import { updateUserById, mergeAsLoggedUser, getFullUserById } from '../services/user-services';
+import User from '../models/user.js';
+import Provider from '../models/provider.js';
+import { newProviderRegister, updateProviderByUserId } from '../services/provider-services.js';
+import { updateUserById, mergeAsLoggedUser, getFullUserById } from '../services/user-services.js';
 
 
 const providerRegistrationHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -61,7 +61,7 @@ const fetchProvidersHandler = async (req: Request, res: Response, next: NextFunc
     try {
         const providers = await Provider.find();
         const providerDetails = await Promise.all(providers.map(async (provider) => {
-            const user = await User.findById(provider.userId);
+            const user = await User.findById(provider._id);
             return getFullUserById(user);
         }));
         return res.json(providerDetails);

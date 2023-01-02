@@ -8,12 +8,12 @@ import session from "express-session";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 
-import User from "./models/user";
-import defaultErrorHandler from "./middleware/errorHandler";
-import useRoute from "./routes";
+import User from "./models/user.js";
+import defaultErrorHandler from "./middleware/errorHandler.js";
+import useRoute from "./routes/index.js";
 
 const app = express();
-app.use(cors({ credentials: true, origin: true }));
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
 // Middlewares
 app.use(session({

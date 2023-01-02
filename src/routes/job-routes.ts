@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { appliedJobsHandler, applyJobHandler, createJobHandler, fetchApplicantDetailsHandler, hireApplicantHandler, providedJobsHandler, recentJobsHandler, selectApplicantHandler } from '../handlers/job-handler';
+import { appliedJobsHandler, applyJobHandler, createJobHandler, fetchApplicantDetailsHandler, hireApplicantHandler, providedJobsHandler, recentJobsHandler, selectApplicantHandler } from '../handlers/job-handler.js';
 
 const router = express.Router();
 

@@ -1,4 +1,4 @@
-import Seeker from "../models/seeker";
+import Seeker from "../models/seeker.js";
 import { Types } from "mongoose";
 
 type SeekerDetails = {

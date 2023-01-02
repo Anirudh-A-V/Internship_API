@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import Job from '../models/jobs';
+import Job from '../models/jobs.js';
 import { applyJob, createJob, fetchApplicantDetailsService, findRecentJobs, getAppliedJobs, hireApplicantService, selectApplicantService } from '../services/job-services.js';
 import { findProviderByUserId } from '../services/provider-services.js';
 import { findSeekerByUserId } from '../services/seeker-services.js';
