@@ -5,6 +5,7 @@ import User from '../models/user.js';
 import Provider from '../models/provider.js';
 import { newProviderRegister, updateProviderByUserId } from '../services/provider-services.js';
 import { updateUserById, mergeAsLoggedUser, getFullUserById } from '../services/user-services.js';
+import logger from '../middleware/winston.js';
 
 
 const providerRegistrationHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -24,9 +25,8 @@ const providerRegistrationHandler = async (req: Request, res: Response, next: Ne
         const providerDetails = mergeAsLoggedUser(newProvider, updatedUser);
 
         return res.json(providerDetails);
-    } catch (err) {
-        console.log('file name: provider-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         next(err);
     }
 }
@@ -50,9 +50,8 @@ const providerEditHandler = async (req: Request, res: Response, next: NextFuncti
         const providerDetails = mergeAsLoggedUser(updatedProvider, updatedUser);
 
         return res.json(providerDetails);
-    } catch (err) {
-        console.log('file name: provider-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         next(err);
     }
 }
@@ -65,9 +64,8 @@ const fetchProvidersHandler = async (req: Request, res: Response, next: NextFunc
             return getFullUserById(user);
         }));
         return res.json(providerDetails);
-    } catch (err) {
-        console.log('file name: provider-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         next(err);
     }
 }
@@ -75,9 +73,8 @@ const fetchProvidersHandler = async (req: Request, res: Response, next: NextFunc
 const getSeekerResume = async (req: Request, res: Response, next: NextFunction) => {
     try {
         return res.download(req.body.resume);
-    } catch (err) {
-        console.log('file name: provider-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         next(err);
     }
 }

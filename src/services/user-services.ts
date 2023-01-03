@@ -4,22 +4,10 @@ import { Types } from 'mongoose';
 import User from '../models/user.js';
 import { findSeekerByUserId } from './seeker-services.js';
 import { findProviderByUserId } from './provider-services.js';
-
-type UserLoginDetails = {
-    email: string,
-    password: string,
-}
-
-type UserRegisterDetails = {
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-    userType: string,
-}
+import logger from '../middleware/winston.js';
 
 
-const createUser = async (userDetails: UserRegisterDetails) => {
+const createUser = async (userDetails: any) => {
     const { email, password, firstName, lastName, userType } = userDetails;
     const hashedPassword = bcrypt.hash(password, 12);
 
@@ -31,8 +19,8 @@ const createUser = async (userDetails: UserRegisterDetails) => {
         userType
     })
         .catch((err) => {
-            console.log('file name: user-services.ts')
-            console.log(err);
+            logger.log('0', 'Error at file name: user-services.ts')
+            logger.error(err);
         });
 
     return user;
@@ -51,8 +39,8 @@ const updateUserById = async (userId: Types.ObjectId, userDetails: any) => {
             new: true
         })
         .catch((err) => {
-            console.log('file name: user-services.ts')
-            console.log(err);
+            logger.log('0', 'Error at file name: user-services.ts')
+            logger.error(err);
         });
 
     return updatedUser;
@@ -90,15 +78,15 @@ const getFullUserById = async (user: any) => {
     if (userType === 'seeker') {
         userOfType = await findSeekerByUserId(userId)
             .catch((err) => {
-                console.log('file name: user-services.ts')
-                console.log(err);
+                logger.log('0', 'Error at file name: user-services.ts')
+                logger.error(err);
             });
     }
     else if (userType === 'provider') {
         userOfType = await findProviderByUserId(userId)
             .catch((err) => {
-                console.log('file name: user-services.ts')
-                console.log(err);
+                logger.log('0', 'Error at file name: user-services.ts')
+                logger.error(err);
             });
     }
 

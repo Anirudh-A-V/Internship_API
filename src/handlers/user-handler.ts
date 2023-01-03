@@ -4,6 +4,7 @@ import passport from 'passport';
 
 import User from '../models/user.js';
 import { createUser, getFullUserById } from '../services/user-services.js';
+import logger from '../middleware/winston.js';
 
 const signinHandler = async (req: Request, res: Response, next: NextFunction) => {
     await passport.authenticate('local', (err, user, info) => {
@@ -16,15 +17,14 @@ const signinHandler = async (req: Request, res: Response, next: NextFunction) =>
                 return next(info);
             }
 
-            const userDetails = await getFullUserById(user);
+            const userDetails = await getFullUserById(user)
+            .catch((err) => {
+                logger.error(err);
+            });
             // Send a redirect message with a status code 307
             if (!userDetails) return res.redirect(307, '/login');
 
-            // Add a unique status code inside the response data
-            return res.status(200).json({
-                status: 'success',
-                data: userDetails
-            });
+            return res.json(userDetails);
         });
     })(req, res, next);
 };
@@ -42,19 +42,20 @@ const signupHandler = async (req: Request, res: Response, next: NextFunction) =>
 
         return passport.authenticate('local', (err, user) => {
             if (err) {
+                logger.error(err);
                 return next(err);
             }
 
             return req.logIn(user, (error) => {
                 if (error) {
+                    logger.error(error);
                     return next(error);
                 }
                 return res.status(200).json({ id: user._id, userType, firstName, lastName });
             });
         })(req, res, next);
-    } catch (err) {
-        console.log('file name: user-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         next(err);
     }
 };
@@ -71,9 +72,8 @@ const isAuthenticatedHandler = async (req: any, res: Response, next: NextFunctio
         const userDetails = await getFullUserById(user);
         // if (!userDetails) return res.status(401).json({ message: 'Unauthorized' });
         return res.json(userDetails);
-    } catch (err) {
-        console.log('file name: user-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         next(err);
     }
 };
@@ -87,9 +87,8 @@ const imageUploadHandler = async (req: any, res: Response, next: NextFunction) =
             { image: uploadedImage.url },
           );
           return res.json({ image: uploadedImage.url });
-    } catch (err) {
-        console.log('file name: user-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         next(err);
     }
 };

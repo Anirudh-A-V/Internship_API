@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 import Stats from "../models/stats.js";
+import logger from "../middleware/winston.js";
 
 const neutralHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -12,9 +13,8 @@ const neutralHandler = async (req: Request, res: Response, next: NextFunction) =
         });
         statData.sort((a, b) => ((a.recruits > b.recruits) ? -1 : 1));
         return res.json({ totalRecruits, statData });
-    } catch (err) {
-        console.log('file name: neutral-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         next(err);
     }
 }

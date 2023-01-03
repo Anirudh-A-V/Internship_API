@@ -4,6 +4,7 @@ import { applyJob, createJob, fetchApplicantDetailsService, findRecentJobs, getA
 import { findProviderByUserId } from '../services/provider-services.js';
 import { findSeekerByUserId } from '../services/seeker-services.js';
 import { getFullUserById } from '../services/user-services.js';
+import logger from '../middleware/winston.js';
 
 const createJobHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -13,8 +14,7 @@ const createJobHandler = async (req: Request, res: Response, next: NextFunction)
         const newJob = await createJob(provider._id, req.body);
         return res.json(newJob);
     } catch (err) {
-        console.log('file name: job-handler.ts')
-        console.log(err);
+        logger.error(err);
         return next(err);
     }
 };
@@ -26,9 +26,8 @@ const applyJobHandler = async (req: Request, res: Response, next: NextFunction) 
         const updatedSeeker = await getFullUserById(req.user);
 
         return res.json(updatedSeeker);
-    } catch (err) {
-        console.log('file name: job-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         return next(err);
     }
 }
@@ -41,9 +40,8 @@ const providedJobsHandler = async (req: Request, res: Response, next: NextFuncti
         const jobs = await Job.find({ providerId: provider._id });
 
         return res.json(jobs);
-    } catch (err) {
-        console.log('file name: job-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         return next(err);
     }
 }
@@ -56,9 +54,8 @@ const appliedJobsHandler = async (req: Request, res: Response, next: NextFunctio
         const jobs = await getAppliedJobs(seeker._id);
 
         return res.json(jobs);
-    } catch (err) {
-        console.log('file name: job-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         return next(err);
     }
 }
@@ -68,9 +65,8 @@ const recentJobsHandler = async (req: Request, res: Response, next: NextFunction
         const jobs = await findRecentJobs();
 
         return res.json(jobs);
-    } catch (err) {
-        console.log('file name: job-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         return next(err);
     }
 }
@@ -80,9 +76,8 @@ const selectApplicantHandler = async (req: Request, res: Response, next: NextFun
         const { seekerId, jobId } = req.body;
         const updatedJob = await selectApplicantService(seekerId, jobId);
         return res.json(updatedJob);
-    } catch (err) {
-        console.log('file name: job-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         return next(err);
     }
 }
@@ -92,9 +87,8 @@ const hireApplicantHandler = async (req: Request, res: Response, next: NextFunct
         const { seekerId, jobId } = req.body;
         const updatedJob = await hireApplicantService(seekerId, jobId);
         return res.json(updatedJob);
-    } catch (err) {
-        console.log('file name: job-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         return next(err);
     }
 }
@@ -105,9 +99,8 @@ const fetchApplicantDetailsHandler = async (req: Request, res: Response, next: N
         const userDetails = await fetchApplicantDetailsService(appliedUsers);
 
         return res.json(userDetails);
-    } catch (err) {
-        console.log('file name: job-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         return next(err);
     }
 }

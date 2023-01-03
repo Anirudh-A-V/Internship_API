@@ -6,6 +6,7 @@ import Seeker from '../models/seeker.js';
 import { newSeekerRegister, updateSeekerByUserId } from '../services/seeker-services.js';
 import { updateUserById, mergeAsLoggedUser } from '../services/user-services.js';
 import { searchJobs } from '../services/job-services.js';
+import logger from '../middleware/winston.js';
 
 const seekerRegistrationHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -23,9 +24,8 @@ const seekerRegistrationHandler = async (req: Request, res: Response, next: Next
         const seekerDetails = mergeAsLoggedUser(newSeeker, updatedUser);
 
         return res.json(seekerDetails);
-    } catch (err) {
-        console.log('file name: seeker-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         next(err);
     }
 }
@@ -48,9 +48,8 @@ const seekerEditHandler = async (req: Request, res: Response, next: NextFunction
         const seekerDetails = mergeAsLoggedUser(updatedSeeker, updatedUser);
 
         return res.json(seekerDetails);
-    } catch (err) {
-        console.log('file name: seeker-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         next(err);
     }
 }
@@ -64,13 +63,12 @@ const resumeUploadHandler = async (req: any, res: Response, next: NextFunction) 
         console.log(req.user);
         console.log(uploadedResume);
         await Seeker.findOneAndUpdate(
-          { userId: req.body._id },
-          { resume: uploadedResume.url },
+            { userId: req.body._id },
+            { resume: uploadedResume.url },
         );
         return res.json({ resume: uploadedResume.url });
-    } catch (err) {
-        console.log('file name: seeker-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         next(err);
     }
 }
@@ -79,11 +77,10 @@ const seekerSearchHandler = async (req: Request, res: Response, next: NextFuncti
     try {
         const { providerId, skillCode } = req.body;
         const searchResults = await searchJobs(providerId, skillCode);
-    
+
         return res.json(searchResults);
-    } catch (err) {
-        console.log('file name: seeker-handler.ts')
-        console.log(err);
+    } catch (err: any) {
+        logger.error(err);
         next(err);
     }
 }
